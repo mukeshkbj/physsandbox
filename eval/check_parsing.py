@@ -80,8 +80,35 @@ def main():
                     continue
                 if got != reference:
                     failures.append((name, label, "different result"))
+    # The example upload files (examples/): each format must give the sample's result;
+    # the renamed-columns one once its header is matched back to the expected names.
+    index = json.loads((ROOT / "examples" / "index.json").read_text())
+    for exp, v in index.items():
+        expected = next((c[2] for c in cases if c[0] == v["source"] and c[1] == exp), {})
+        reference = result(SEEDED / v["source"], exp, expected)
+        original_header = [l for l in (SEEDED / v["source"]).read_text().splitlines()
+                           if l.strip() and not l.startswith("#")][0]
+        for rel, label in v["files"]:
+            path = ROOT / "examples" / rel
+            checked += 1
+            try:
+                if rel.endswith("other_column_names.csv"):
+                    lines = path.read_text().splitlines()
+                    i = next(k for k, l in enumerate(lines) if l.strip() and not l.startswith("#"))
+                    lines[i] = original_header
+                    with tempfile.TemporaryDirectory() as tmp2:
+                        p = Path(tmp2) / "input.csv"
+                        p.write_text("\n".join(lines) + "\n")
+                        got = result(p, exp, expected)
+                else:
+                    got = result(path, exp, expected)
+            except Exception as e:  # noqa: BLE001
+                failures.append((rel, label, f"{type(e).__name__}: {e}"))
+                continue
+            if got != reference:
+                failures.append((rel, label, "different result"))
     experiments = len({c[1] for c in cases})
-    print(f"{len(cases)} seeded files across {experiments} experiments, {checked} rewritten files")
+    print(f"{len(cases)} seeded files across {experiments} experiments, plus examples/: {checked} rewritten files")
     for f in failures:
         print("FAIL", *f)
     print(f"{checked - len(failures)}/{checked} give exactly the original result")

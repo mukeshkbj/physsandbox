@@ -105,6 +105,8 @@ code, pre, .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
 .drop-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 12px; cursor: pointer; font-size: 14px; }
 .chip:hover { border-color: var(--ink); }
+.formats { margin-top: 6px; align-items: center; } .formats-label { font-size: 13px; color: var(--muted, #5C6B77); margin-right: 4px; }
+.chip.small { padding: 4px 10px; font-size: 13px; }
 .chip[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--surface); }
 .chip .tag { font-size: 12px; color: var(--laser); margin-left: 6px; }
 .chip[aria-pressed="true"] .tag { color: #FFB3AD; }
@@ -294,8 +296,9 @@ textarea { width: 100%; min-height: 64px; padding: 10px 12px; border: 1px solid 
       <div class="fields" id="expected-fields"></div>
       <div class="drop" id="drop">
         <div class="drop-row" id="samples" aria-label="Sample datasets"></div>
+        <div class="drop-row formats" id="formats" aria-label="The same measurement in other file formats"></div>
         <div class="drop-row">
-          <label class="btn secondary small" for="file">Upload a CSV<input id="file" class="sr" type="file" accept=".csv,text/csv"></label>
+          <label class="btn secondary small" for="file">Upload a CSV<input id="file" class="sr" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain,text/tab-separated-values"></label>
           <span class="file-name" id="file-name">or drop it here</span>
         </div>
         <div class="sample-info" id="sample-info" aria-live="polite"></div>
@@ -430,7 +433,7 @@ function sci(v, prec = 4) {
 }
 function fmt(v, unit, isPlain, prec) { return isPlain || !SI_UNITS.has(unit) ? plain(v, unit, prec) : si(v, unit); }
 
-let SAMPLES = [];
+let SAMPLES = [], EXAMPLES = {};
 const S = { experiment: "resistance_4wire", domain: "electricity", file: null, fileLabel: "", sample: null, steps: [], pendingTest: null, last: null };
 
 /* ---------- formatting ---------- */
@@ -478,8 +481,22 @@ function renderSamples() {
   $("samples").innerHTML = list.map(([f, l, tag]) =>
     `<button class="chip" data-sample="${f}" aria-pressed="${S.sample === f}">${esc(l)}${tag ? `<span class="tag">${esc(tag)}</span>` : ""}</button>`).join("")
     || `<span class="file-name">Upload the CSV you recorded for this test.</span>`;
+  const ex = (EXAMPLES || {})[S.experiment];
+  $("formats").innerHTML = !S.pendingTest && ex
+    ? `<span class="formats-label">Same measurement, other file formats:</span>` + ex.files.map(([rel, label]) =>
+        `<button class="chip small" data-example="${esc(rel)}" aria-pressed="${S.example === rel}">${esc(label)}</button>`).join("")
+    : "";
   renderSampleInfo();
 }
+$("formats").addEventListener("click", async e => {
+  const b = e.target.closest("[data-example]"); if (!b) return;
+  const rel = b.dataset.example;
+  try {
+    S.file = await fetch("/api/examples/" + rel).then(r => { if (!r.ok) throw new Error(); return r.blob(); });
+  } catch { return toast("Couldn't load that example file."); }
+  S.sample = null; S.example = rel; S.fileLabel = rel.split("/").pop();
+  $("file-name").innerHTML = `Using ${esc(S.fileLabel)} · <a href="/api/examples/${esc(rel)}" download>download it</a>`; renderSamples();
+});
 
 /* The same reading of a table as the sandbox's (sandbox/tools/analyze.py load_csv):
    UTF-8 or UTF-16, comma, semicolon, tab or space separated, quoted names,
@@ -551,9 +568,14 @@ async function renderSampleInfo() {
   const fits = !missing.length || (S.pendingTest && header.length >= 2);
   const preview = lines.slice(0, Math.min(lines.length, comments + 4)).map(l =>
     l.startsWith("#") ? `<span class="cm">${esc(l.length > 110 ? l.slice(0, 110) + "…" : l)}</span>` : esc(l)).join("\n");
-  const info = (CAT.sample_info || {})[S.sample];
+  const exInfo = S.example && (EXAMPLES[S.experiment] || {});
+  const info = (CAT.sample_info || {})[S.sample] || (exInfo && exInfo.source &&
+    [`The sample "${exInfo.source_label}" (${exInfo.source}), saved as ${(exInfo.files.find(f => f[0] === S.example) || [, "another format"])[1].toLowerCase()}.`,
+     !S.example.endsWith("other_column_names.csv") ? "PhysSandbox reads it exactly as it reads the original, so the result is the same."
+       : fits ? "Its columns are now matched to this experiment's names (only the header changed), so the result is the sample's."
+       : "Its columns have the names a person would type: match them below, then analyse."]);
   box.innerHTML = `
-    ${info ? `<dl><dt>The bench</dt><dd>${esc(info[0])}</dd><dt>What looks off</dt><dd>${esc(info[1])}</dd></dl>` : ""}
+    ${info ? `<dl><dt>${S.example ? "The file" : "The bench"}</dt><dd>${esc(info[0])}</dd><dt>${S.example ? "What to expect" : "What looks off"}</dt><dd>${esc(info[1])}</dd></dl>` : ""}
     <div class="facts"><span>${Math.max(data.length - 1, 0)} readings</span><span>columns ${header.map(h => `<code>${esc(h)}</code>`).join(", ") || "none found"}</span>
       ${comments ? `<span class="bad">${comments} comment line${comments > 1 ? "s" : ""}: read ${comments > 1 ? "them" : "it"} before trusting the file</span>` : ""}
       ${fits ? `<span class="ok">✓ matches this experiment</span>` : `<span class="bad">✕ this experiment needs ${missing.map(c => `<code>${esc(c)}</code>`).join(", ")}</span>`}</div>
@@ -565,21 +587,21 @@ $("domains").addEventListener("click", e => {
   const b = e.target.closest("[data-domain]"); if (!b || S.steps.length) return;
   S.domain = b.dataset.domain;
   S.experiment = Object.entries(CAT.experiments).find(([, x]) => x.domain === S.domain)[0];
-  S.sample = null; S.file = null; $("file-name").textContent = "or drop it here"; renderExperiment();
+  S.sample = null; S.example = null; S.file = null; $("file-name").textContent = "or drop it here"; renderExperiment();
 });
 $("exp-grid").addEventListener("click", e => {
   const b = e.target.closest("[data-exp]"); if (!b || S.steps.length) return;
-  S.experiment = b.dataset.exp; S.sample = null; S.file = null; $("file-name").textContent = "or drop it here"; renderExperiment();
+  S.experiment = b.dataset.exp; S.sample = null; S.example = null; S.file = null; $("file-name").textContent = "or drop it here"; renderExperiment();
 });
 async function selectSample(name, label) {
-  S.sample = name; S.fileLabel = label || name;
+  S.sample = name; S.example = null; S.fileLabel = label || name;
   S.file = await fetch("/api/samples/" + name).then(r => r.blob());
   $("file-name").textContent = `Using ${name}`; renderSamples();
 }
 $("samples").addEventListener("click", e => {
   const b = e.target.closest("[data-sample]"); if (b) selectSample(b.dataset.sample, b.textContent);
 });
-function takeFile(f) { if (!f) return; S.file = f; S.sample = null; S.fileLabel = f.name; $("file-name").textContent = f.name; renderSamples(); }
+function takeFile(f) { if (!f) return; S.file = f; S.sample = null; S.example = null; S.fileLabel = f.name; $("file-name").textContent = f.name; renderSamples(); }
 $("file").addEventListener("change", e => takeFile(e.target.files[0]));
 const drop = $("drop");
 ["dragenter", "dragover"].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add("over"); }));
@@ -606,7 +628,7 @@ async function runAnalyse() {
                    values: res.values, status: res.status, next: res.next_tests[0],
                    expected: res.expected, walls: res.walls, plot: res.plot,
                    explanation: res.explanation, explained_by: res.explained_by });
-    S.last = res; S.pendingTest = null; S.sample = null; S.file = null;
+    S.last = res; S.pendingTest = null; S.sample = null; S.example = null; S.file = null;
     $("file-name").textContent = "or drop it here";
     $("drop").classList.remove("followup"); $("followup-note").hidden = true; renderSamples();
     if (res.status === "investigating") $("s1-hint").textContent = "Run the recommended test, then add its result here.";
@@ -615,7 +637,7 @@ async function runAnalyse() {
   finally { busy("go", false, "Analyse in the glovebox"); refreshSide(); }
 }
 $("restart").addEventListener("click", () => {
-  Object.assign(S, { steps: [], pendingTest: null, last: null, sample: null, file: null, firstBlob: null });
+  Object.assign(S, { steps: [], pendingTest: null, last: null, sample: null, example: null, file: null, firstBlob: null });
   ["s2", "s3", "s4", "s5"].forEach(id => $(id).classList.add("locked"));
   ["s2-body", "s3-body", "s4-body", "agent-out"].forEach(id => $(id).innerHTML = "");
   $("followup-note").hidden = true; $("restart").hidden = true; $("drop").classList.remove("followup");
@@ -748,7 +770,7 @@ function renderTests(res) {
   $("ran-test").addEventListener("click", () => startFollowup(t));
 }
 function startFollowup(t) {
-    S.pendingTest = t.id; S.sample = null; S.file = null;
+    S.pendingTest = t.id; S.sample = null; S.example = null; S.file = null;
     $("drop").classList.add("followup");
     $("followup-note").hidden = false; $("followup-note").textContent = `Adding the result of: ${t.name.toLowerCase()}`;
     $("s1-hint").textContent = "Add the data you recorded for the test. Only its outcome is added to the evidence you already have.";
@@ -1013,7 +1035,7 @@ document.addEventListener("keydown", e => { if (TOUR.on && e.key === "Escape") e
 async function init() {
   try {
     const s = await fetch("/api/status").then(r => r.json());
-    CAT = s.catalog; SAMPLES = s.samples || []; Object.assign(LABELS, CAT.labels || {}); renderExperiment();
+    CAT = s.catalog; SAMPLES = s.samples || []; EXAMPLES = s.examples || {}; Object.assign(LABELS, CAT.labels || {}); renderExperiment();
     const isolated = s.mode === "docker";
     $("lamp-box").className = "lamp" + (isolated ? "" : " warn");
     $("pill-box").textContent = isolated ? `Sandbox: ${s.runtime === "runsc" ? "gVisor" : "Docker"}, no network` : "Sandbox: development mode";

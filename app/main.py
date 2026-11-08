@@ -79,10 +79,23 @@ def status():
     return {
         "mode": MODE, "runtime": RUNTIME, "walls": WALLS, "image": image_digest(),
         "model": agent.MODEL if agent.model_configured() else None,
-        "experiments": EXPERIMENTS, "catalog": CATALOG, "samples": SAMPLES,
+        "experiments": EXPERIMENTS, "catalog": CATALOG, "samples": SAMPLES, "examples": EXAMPLES,
         "ledger": ledger.verify(),          # includes head_record: keep a copy to detect rollback
         "public_key": "/api/ledger/public-key",
     }
+
+
+EXAMPLES = json.loads((ROOT / "examples" / "index.json").read_text()) if (ROOT / "examples" / "index.json").exists() else {}
+_EXAMPLE_FILES = {rel for v in EXAMPLES.values() for rel, _ in v["files"]}
+
+
+@app.get("/api/examples/{experiment}/{name}")
+def example_file(experiment: str, name: str):
+    """The same measurement saved in other file formats (data/make_examples.py)."""
+    rel = f"{experiment}/{name}"
+    if rel not in _EXAMPLE_FILES:
+        raise HTTPException(404)
+    return FileResponse(ROOT / "examples" / rel, media_type="application/octet-stream", filename=name)
 
 
 @app.get("/api/samples/{name}")

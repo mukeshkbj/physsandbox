@@ -1,0 +1,1328 @@
+{
+ "resistance_4wire": {
+  "source": "r_offset_1.csv",
+  "source_label": "Resistor reads high at low current",
+  "files": [
+   [
+    "resistance_4wire/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "resistance_4wire/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "resistance_4wire/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "resistance_4wire/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "resistance_4wire/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "rc_charging": {
+  "source": "rc_probe_loading.csv",
+  "source_label": "Charges to half the supply, too fast",
+  "files": [
+   [
+    "rc_charging/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "rc_charging/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "rc_charging/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "rc_charging/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "rc_charging/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "waveform": {
+  "source": "scope_hum_1.csv",
+  "source_label": "Trace with a hum on it",
+  "files": [
+   [
+    "waveform/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "waveform/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "waveform/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "waveform/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "waveform/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "helmholtz": {
+  "source": "helmholtz_ambient.csv",
+  "source_label": "Field doesn't start at zero",
+  "files": [
+   [
+    "helmholtz/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "helmholtz/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "helmholtz/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "helmholtz/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "helmholtz/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "faraday": {
+  "source": "faraday_offset.csv",
+  "source_label": "EMF sits on a DC offset",
+  "files": [
+   [
+    "faraday/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "faraday/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "faraday/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "faraday/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "faraday/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "laser_alignment": {
+  "source": "laser_misaligned.csv",
+  "source_label": "Peak is off-centre",
+  "files": [
+   [
+    "laser_alignment/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "laser_alignment/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "laser_alignment/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "laser_alignment/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "laser_alignment/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "malus": {
+  "source": "malus_poor_extinction.csv",
+  "source_label": "Never goes dark",
+  "files": [
+   [
+    "malus/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "malus/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "malus/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "malus/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "malus/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "beer_lambert": {
+  "source": "beer_stray_light.csv",
+  "source_label": "Intensity levels off above zero",
+  "files": [
+   [
+    "beer_lambert/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "beer_lambert/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "beer_lambert/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "beer_lambert/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "beer_lambert/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "cooling": {
+  "source": "cooling_cjc_offset.csv",
+  "source_label": "Settles 2.5 °C above the room",
+  "files": [
+   [
+    "cooling/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "cooling/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "cooling/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "cooling/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "cooling/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "diode": {
+  "source": "diode_burden.csv",
+  "source_label": "Curve bends over at high current",
+  "files": [
+   [
+    "diode/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "diode/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "diode/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "diode/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "diode/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "hall": {
+  "source": "hall_misaligned.csv",
+  "source_label": "Carrier density 25% high",
+  "files": [
+   [
+    "hall/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "hall/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "hall/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "hall/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "hall/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "grating": {
+  "source": "grating_wrong_spec.csv",
+  "source_label": "Wavelength comes out 17% short",
+  "files": [
+   [
+    "grating/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "grating/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "grating/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "grating/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "grating/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "pendulum": {
+  "source": "pendulum_large_amp.csv",
+  "source_label": "g comes out 3% low",
+  "files": [
+   [
+    "pendulum/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "pendulum/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "pendulum/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "pendulum/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "pendulum/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "hooke": {
+  "source": "hooke_hanger.csv",
+  "source_label": "Force line misses the origin",
+  "files": [
+   [
+    "hooke/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "hooke/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "hooke/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "hooke/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "hooke/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "gamma_attenuation": {
+  "source": "gamma_background.csv",
+  "source_label": "Counts level off behind thick lead",
+  "files": [
+   [
+    "gamma_attenuation/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "gamma_attenuation/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "gamma_attenuation/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "gamma_attenuation/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "gamma_attenuation/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "muon_lifetime": {
+  "source": "muon_light_leak.csv",
+  "source_label": "Flat background ten times the usual",
+  "files": [
+   [
+    "muon_lifetime/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "muon_lifetime/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "muon_lifetime/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "muon_lifetime/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "muon_lifetime/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "faraday_rotation": {
+  "source": "faraday_rot_nonuniform.csv",
+  "source_label": "Verdet constant 11% low",
+  "files": [
+   [
+    "faraday_rotation/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "faraday_rotation/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "faraday_rotation/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "faraday_rotation/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "faraday_rotation/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "hysteresis": {
+  "source": "hysteresis_turns.csv",
+  "source_label": "Loop 12% too short",
+  "files": [
+   [
+    "hysteresis/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "hysteresis/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "hysteresis/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "hysteresis/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "hysteresis/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "electron_diffraction": {
+  "source": "ediff_camera_length.csv",
+  "source_label": "Both spacings 8% large",
+  "files": [
+   [
+    "electron_diffraction/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "electron_diffraction/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "electron_diffraction/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "electron_diffraction/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "electron_diffraction/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "zeeman": {
+  "source": "zeeman_field_scale.csv",
+  "source_label": "Bohr magneton 11% low",
+  "files": [
+   [
+    "zeeman/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "zeeman/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "zeeman/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "zeeman/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "zeeman/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "millikan": {
+  "source": "millikan_spacing.csv",
+  "source_label": "e comes out 13% high",
+  "files": [
+   [
+    "millikan/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "millikan/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "millikan/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "millikan/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "millikan/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "michelson": {
+  "source": "michelson_miscount.csv",
+  "source_label": "Wavelength 3% long, line straight",
+  "files": [
+   [
+    "michelson/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "michelson/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "michelson/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "michelson/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "michelson/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "resonance_tube": {
+  "source": "sound_warm_air.csv",
+  "source_label": "Speed of sound 2.5% high",
+  "files": [
+   [
+    "resonance_tube/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "resonance_tube/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "resonance_tube/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "resonance_tube/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "resonance_tube/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "stefan_lamp": {
+  "source": "stefan_ammeter_zero.csv",
+  "source_label": "Exponent below 4, worst when cold",
+  "files": [
+   [
+    "stefan_lamp/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "stefan_lamp/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "stefan_lamp/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "stefan_lamp/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "stefan_lamp/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "photoelectric": {
+  "source": "photo_anode.csv",
+  "source_label": "h/e comes out 12% low",
+  "files": [
+   [
+    "photoelectric/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "photoelectric/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "photoelectric/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "photoelectric/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "photoelectric/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "franck_hertz": {
+  "source": "fh_cool_oven.csv",
+  "source_label": "Dips between the peaks are shallow",
+  "files": [
+   [
+    "franck_hertz/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "franck_hertz/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "franck_hertz/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "franck_hertz/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "franck_hertz/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "radioactive_decay": {
+  "source": "decay_background.csv",
+  "source_label": "Counts level off instead of falling to zero",
+  "files": [
+   [
+    "radioactive_decay/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "radioactive_decay/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "radioactive_decay/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "radioactive_decay/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "radioactive_decay/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "e_over_m": {
+  "source": "em_parallax.csv",
+  "source_label": "e/m 11% high at every voltage",
+  "files": [
+   [
+    "e_over_m/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "e_over_m/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "e_over_m/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "e_over_m/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "e_over_m/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "esr": {
+  "source": "esr_probe_offset.csv",
+  "source_label": "Line misses the origin",
+  "files": [
+   [
+    "esr/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "esr/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "esr/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "esr/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "esr/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "rutherford": {
+  "source": "ruth_zero_offset.csv",
+  "source_label": "Small angles count too fast",
+  "files": [
+   [
+    "rutherford/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "rutherford/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "rutherford/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "rutherford/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "rutherford/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "bragg_xray": {
+  "source": "bragg_zero_offset.csv",
+  "source_label": "The orders disagree on d",
+  "files": [
+   [
+    "bragg_xray/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "bragg_xray/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "bragg_xray/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "bragg_xray/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "bragg_xray/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "young_double_slit": {
+  "source": "young_screen_distance.csv",
+  "source_label": "Wavelength 8% low, line straight",
+  "files": [
+   [
+    "young_double_slit/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "young_double_slit/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "young_double_slit/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "young_double_slit/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "young_double_slit/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "rlc_resonance": {
+  "source": "rlc_generator_loading.csv",
+  "source_label": "Peak low and broad, f₀ right",
+  "files": [
+   [
+    "rlc_resonance/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "rlc_resonance/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "rlc_resonance/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "rlc_resonance/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "rlc_resonance/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "stokes_viscosity": {
+  "source": "stokes_warm_liquid.csv",
+  "source_label": "Viscosity 16% low, every ball alike",
+  "files": [
+   [
+    "stokes_viscosity/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "stokes_viscosity/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "stokes_viscosity/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "stokes_viscosity/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "stokes_viscosity/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "lees_disc": {
+  "source": "leesdisc_thermometer_offset.csv",
+  "source_label": "Conductivity 10% low",
+  "files": [
+   [
+    "lees_disc/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "lees_disc/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "lees_disc/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "lees_disc/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "lees_disc/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "nmr_echo": {
+  "source": "nmr_pulse_misset.csv",
+  "source_label": "Echo only half its usual size",
+  "files": [
+   [
+    "nmr_echo/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "nmr_echo/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "nmr_echo/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "nmr_echo/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "nmr_echo/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "sc_transition": {
+  "source": "sc_lag.csv",
+  "source_label": "Transition low and broad",
+  "files": [
+   [
+    "sc_transition/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "sc_transition/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "sc_transition/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "sc_transition/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "sc_transition/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "compton": {
+  "source": "compton_gain.csv",
+  "source_label": "m_e c² and 662 keV both read low",
+  "files": [
+   [
+    "compton/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "compton/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "compton/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "compton/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "compton/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "optical_pumping": {
+  "source": "rb_current_scale.csv",
+  "source_label": "Both g_F values 7% low",
+  "files": [
+   [
+    "optical_pumping/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "optical_pumping/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "optical_pumping/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "optical_pumping/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "optical_pumping/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "kater_pendulum": {
+  "source": "kater_amplitude.csv",
+  "source_label": "g 0.8% low, smooth curves",
+  "files": [
+   [
+    "kater_pendulum/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "kater_pendulum/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "kater_pendulum/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "kater_pendulum/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "kater_pendulum/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "cavendish": {
+  "source": "cavendish_scale_distance.csv",
+  "source_label": "G 8% low, clean swing",
+  "files": [
+   [
+    "cavendish/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "cavendish/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "cavendish/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "cavendish/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "cavendish/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "driven_oscillator": {
+  "source": "oscillator_dial.csv",
+  "source_label": "Resonance 4% low, shape right",
+  "files": [
+   [
+    "driven_oscillator/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "driven_oscillator/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "driven_oscillator/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "driven_oscillator/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "driven_oscillator/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "boyle_gas": {
+  "source": "boyle_dead_volume.csv",
+  "source_label": "pV falls as the gas is squeezed",
+  "files": [
+   [
+    "boyle_gas/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "boyle_gas/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "boyle_gas/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "boyle_gas/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "boyle_gas/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "thin_lens": {
+  "source": "lens_holder_edge.csv",
+  "source_label": "Straight line, but its slope isn't −1",
+  "files": [
+   [
+    "thin_lens/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "thin_lens/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "thin_lens/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "thin_lens/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "thin_lens/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "brewster": {
+  "source": "brewster_polariser.csv",
+  "source_label": "Minimum doesn't reach zero",
+  "files": [
+   [
+    "brewster/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "brewster/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "brewster/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "brewster/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "brewster/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "band_gap": {
+  "source": "bandgap_lag.csv",
+  "source_label": "Band gap 9% high",
+  "files": [
+   [
+    "band_gap/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "band_gap/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "band_gap/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "band_gap/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "band_gap/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "thermocouple": {
+  "source": "thermocouple_ice_melted.csv",
+  "source_label": "Every emf 0.3 mV low",
+  "files": [
+   [
+    "thermocouple/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "thermocouple/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "thermocouple/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "thermocouple/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "thermocouple/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "planck_led": {
+  "source": "planck_gain.csv",
+  "source_label": "h comes out 10% low",
+  "files": [
+   [
+    "planck_led/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "planck_led/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "planck_led/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "planck_led/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "planck_led/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "tunnelling": {
+  "source": "tunnel_mass.csv",
+  "source_label": "Decays far too slowly",
+  "files": [
+   [
+    "tunnelling/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "tunnelling/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "tunnelling/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "tunnelling/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "tunnelling/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "blackbody": {
+  "source": "blackbody_shift.csv",
+  "source_label": "Lamp looks 3% cooler than rated",
+  "files": [
+   [
+    "blackbody/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "blackbody/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "blackbody/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "blackbody/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "blackbody/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ },
+ "spectral_lines": {
+  "source": "balmer_impurity.csv",
+  "source_label": "One line is off the series",
+  "files": [
+   [
+    "spectral_lines/excel_export.csv",
+    "Excel export"
+   ],
+   [
+    "spectral_lines/semicolon_decimal_comma.csv",
+    "Semicolons, decimal commas"
+   ],
+   [
+    "spectral_lines/tab_separated.tsv",
+    "Tab-separated"
+   ],
+   [
+    "spectral_lines/unicode_text.txt",
+    "UTF-16 \"Unicode text\""
+   ],
+   [
+    "spectral_lines/other_column_names.csv",
+    "Other column names"
+   ]
+  ]
+ }
+}
