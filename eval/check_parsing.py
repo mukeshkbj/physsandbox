@@ -80,16 +80,16 @@ def main():
                     continue
                 if got != reference:
                     failures.append((name, label, "different result"))
-    # The example upload files (examples/): each format must give the sample's result;
+    # The example upload files (experiments/<area>/<experiment>/): each format must give the sample's result;
     # the renamed-columns one once its header is matched back to the expected names.
-    index = json.loads((ROOT / "examples" / "index.json").read_text())
+    index = json.loads((ROOT / "experiments" / "index.json").read_text())
     for exp, v in index.items():
         expected = next((c[2] for c in cases if c[0] == v["source"] and c[1] == exp), {})
         reference = result(SEEDED / v["source"], exp, expected)
         original_header = [l for l in (SEEDED / v["source"]).read_text().splitlines()
                            if l.strip() and not l.startswith("#")][0]
         for rel, label in v["files"]:
-            path = ROOT / "examples" / rel
+            path = ROOT / "experiments" / rel
             checked += 1
             try:
                 if rel.endswith("other_column_names.csv"):
@@ -108,7 +108,7 @@ def main():
             if got != reference:
                 failures.append((rel, label, "different result"))
     experiments = len({c[1] for c in cases})
-    print(f"{len(cases)} seeded files across {experiments} experiments, plus examples/: {checked} rewritten files")
+    print(f"{len(cases)} seeded files across {experiments} experiments, plus the example files: {checked} rewritten files")
     for f in failures:
         print("FAIL", *f)
     print(f"{checked - len(failures)}/{checked} give exactly the original result")

@@ -110,4 +110,4 @@ _r.run_path(str(Path(__file__).parent / "generate_bench.py"))
 for _g in sorted(Path(__file__).parent.glob("gen_*.py")):  # further experiment groups
     _r.run_path(str(_g))
 # Example upload files in other formats, made from the samples above
-_r.run_path(str(Path(__file__).parent / "make_examples.py"), run_name="__main__")
+_r.run_path(str(Path(__file__).parent / "make_experiments.py"), run_name="__main__")
