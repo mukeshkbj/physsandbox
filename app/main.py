@@ -89,13 +89,13 @@ EXAMPLES = json.loads((ROOT / "examples" / "index.json").read_text()) if (ROOT /
 _EXAMPLE_FILES = {rel for v in EXAMPLES.values() for rel, _ in v["files"]}
 
 
-@app.get("/api/examples/{experiment}/{name}")
-def example_file(experiment: str, name: str):
-    """The same measurement saved in other file formats (data/make_examples.py)."""
-    rel = f"{experiment}/{name}"
+@app.get("/api/examples/{rel:path}")
+def example_file(rel: str):
+    """The same measurement saved in other file formats (data/make_examples.py):
+    examples/<area>/<experiment>/<file>. Only files listed in examples/index.json are served."""
     if rel not in _EXAMPLE_FILES:
         raise HTTPException(404)
-    return FileResponse(ROOT / "examples" / rel, media_type="application/octet-stream", filename=name)
+    return FileResponse(ROOT / "examples" / rel, media_type="application/octet-stream", filename=rel.rsplit("/", 1)[-1])
 
 
 @app.get("/api/samples/{name}")
