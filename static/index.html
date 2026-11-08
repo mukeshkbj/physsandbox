@@ -570,7 +570,7 @@ async function renderSampleInfo() {
     l.startsWith("#") ? `<span class="cm">${esc(l.length > 110 ? l.slice(0, 110) + "…" : l)}</span>` : esc(l)).join("\n");
   const exInfo = S.example && (EXAMPLES[S.experiment] || {});
   const info = (CAT.sample_info || {})[S.sample] || (exInfo && exInfo.source &&
-    [`The sample "${exInfo.source_label}" (${exInfo.source}), saved as ${(exInfo.files.find(f => f[0] === S.example) || [, "another format"])[1].toLowerCase()}.`,
+    [`The sample "${exInfo.source_label}" (${exInfo.source}), rewritten as: ${(exInfo.files.find(f => f[0] === S.example) || [, "another format"])[1]}.`,
      !S.example.endsWith("other_column_names.csv") ? "PhysSandbox reads it exactly as it reads the original, so the result is the same."
        : fits ? "Its columns are now matched to this experiment's names (only the header changed), so the result is the sample's."
        : "Its columns have the names a person would type: match them below, then analyse."]);
