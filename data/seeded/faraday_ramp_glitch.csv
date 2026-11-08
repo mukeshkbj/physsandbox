@@ -1,0 +1,18 @@
+# Faraday's Law - steady flux ramp,,
+# Coil turns: 200,,
+# Expected behaviour: induced voltage = -N * d(flux)/dt,,
+# One reading at t = 0.5 s looks wrong,,
+,,
+time_s,magnetic_flux_Wb,induced_voltage_V
+0,0,-0.2
+0.1,0.0001,-0.2
+0.2,0.0002,-0.2
+0.3,0.0003,-0.2
+0.4,0.0004,-0.2
+0.5,0.0005,-0.65
+0.6,0.0006,-0.2
+0.7,0.0007,-0.2
+0.8,0.0008,-0.2
+0.9,0.0009,-0.2
+1,0.001,-0.2
+1.1,0.0011,-0.2

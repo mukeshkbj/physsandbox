@@ -27,7 +27,8 @@ RISKY_CALLS = {"system", "popen", "eval", "exec", "__import__", "fork", "remove"
 SYSTEM = (
     "You write short Python 3 analysis scripts for physics lab data (electricity, magnetism, "
     "optics, heat). The CSV path is in the "
-    "variable DATA (already defined). Lines starting with # are comments: skip them. "
+    "variable DATA (already defined). Lines starting with # are comments: skip them, and skip blank lines and "
+    "lines of only commas (a spreadsheet's empty rows); the first other line is the header. "
     "Available: numpy, scipy, lmfit, the standard library. No plotting. Print a few clear "
     "result lines with units. Reply with ONLY one ```python code block."
 )
@@ -40,7 +41,7 @@ def model_configured():
 # --- Templates used when no model key is configured ------------------------
 TEMPLATES = {
     "offset": '''import numpy as np
-rows = [l for l in open(DATA) if not l.startswith("#")]
+rows = [l for l in open(DATA, encoding="utf-8-sig", errors="replace") if l.strip().strip(",;") and not l.lstrip().startswith("#")]
 data = np.genfromtxt(rows, delimiter=",", names=True)
 i, v = data["current_A"], data["voltage_V"]
 A = np.vstack([i, np.ones_like(i)]).T
@@ -51,7 +52,7 @@ print(f"R  = {slope*1e3:.4f} ± {np.sqrt(cov[0,0])*1e3:.4f} mΩ")
 print(f"V0 = {offset*1e6:.2f} ± {np.sqrt(cov[1,1])*1e6:.2f} µV  (offset at zero current)")
 ''',
     "residuals": '''import numpy as np
-rows = [l for l in open(DATA) if not l.startswith("#")]
+rows = [l for l in open(DATA, encoding="utf-8-sig", errors="replace") if l.strip().strip(",;") and not l.lstrip().startswith("#")]
 data = np.genfromtxt(rows, delimiter=",", names=True)
 x, y = data[data.dtype.names[0]], data[data.dtype.names[1]]
 p = np.polyfit(x, y, 1)
@@ -62,7 +63,7 @@ runs = 1 + sum(1 for a, b in zip(r, r[1:]) if (a > 0) != (b > 0))
 print(f"sign runs = {runs} of {len(r)} points (few runs suggests curvature)")
 ''',
     "spectrum": '''import numpy as np
-rows = [l for l in open(DATA) if not l.startswith("#")]
+rows = [l for l in open(DATA, encoding="utf-8-sig", errors="replace") if l.strip().strip(",;") and not l.lstrip().startswith("#")]
 data = np.genfromtxt(rows, delimiter=",", names=True)
 t, v = data[data.dtype.names[0]], data[data.dtype.names[1]]
 fs = 1 / np.median(np.diff(t))
@@ -82,7 +83,7 @@ print("Report: the sample is fine.")
 
 LOAD = """import numpy as np
 from scipy.optimize import curve_fit
-rows = [l for l in open(DATA) if not l.startswith("#")]
+rows = [l for l in open(DATA, encoding="utf-8-sig", errors="replace") if l.strip().strip(",;") and not l.lstrip().startswith("#")]
 d = np.genfromtxt(rows, delimiter=",", names=True)
 """
 

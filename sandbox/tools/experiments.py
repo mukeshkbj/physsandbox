@@ -172,17 +172,47 @@ def faraday(header, data, expected):
     v = col(header, data, "induced_voltage_V")
     N = float(expected.get("turns", 200))
     emf = -N * np.gradient(phi, t)
-    g, v0, eg, ev0 = linfit(emf, v)
+    scale = float(np.mean(np.abs(emf))) or 1e-30
+    if t.size >= 4 and float(np.std(emf)) / scale > 0.05:
+        # The predicted EMF varies (a magnet moving through): fit gain and offset.
+        g, v0, eg, ev0 = linfit(emf, v)
+        resid = v - (g * emf + v0)
+        offset_sigma = sig(v0, ev0)
+    else:
+        # dPhi/dt is constant (a steady ramp): the predicted EMF is flat, so a gain
+        # error and an offset can't be told apart. Take the median ratio (robust to
+        # a single bad reading) and leave the offset unidentified.
+        ratio = v / np.where(np.abs(emf) > 0, emf, np.nan)
+        ratio = ratio[np.isfinite(ratio)]
+        g = float(np.median(ratio)) if ratio.size else 0.0
+        eg = float(1.4826 * np.median(np.abs(ratio - g)) / np.sqrt(max(ratio.size, 1))) if ratio.size else 0.0
+        v0, ev0 = None, None
+        resid = v - g * emf
+        offset_sigma = 0.0
+    # One reading far off the line (a loose contact, an amplifier spike): its distance
+    # from the rest in robust standard deviations, with a floor for perfectly clean data.
+    med = float(np.median(resid))
+    mad = 1.4826 * float(np.median(np.abs(resid - med)))
+    floor = 1e-6 + 0.002 * float(np.median(np.abs(v)))
+    dev = np.abs(resid - med) / max(mad, floor)
+    worst = int(np.argmax(dev))
+    outlier_sigma = float(min(dev[worst], 99.0))
+    values = {
+        "measured_over_predicted": {"value": g, "uncertainty": eg},
+        "peak_predicted_emf_V": {"value": float(np.max(np.abs(emf)))},
+    }
+    if v0 is not None:
+        values["dc_offset_V"] = {"value": v0, "uncertainty": ev0}
+    if outlier_sigma > 6:
+        values["odd_reading_time_s"] = {"value": float(t[worst])}
     return {
-        "values": {
-            "measured_over_predicted": {"value": g, "uncertainty": eg},
-            "dc_offset_V": {"value": v0, "uncertainty": ev0},
-            "peak_predicted_emf_V": {"value": float(np.max(np.abs(emf)))},
-        },
+        "values": values,
         "evidence": {
             "gain_ratio": g,
-            "offset_sigma": sig(v0, ev0),
+            "offset_sigma": offset_sigma,
             "polarity_reversed": bool(g < 0),
+            "outlier_sigma": outlier_sigma,
+            "steady_ramp": v0 is None,
         },
         "plot": {"x": t.tolist(), "y": v.tolist(), "x_label": "time (s)", "y_label": "induced EMF (V)",
                  "unit": "V", "x_unit": "s", "connect": True,

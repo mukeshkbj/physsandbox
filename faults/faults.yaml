@@ -363,7 +363,15 @@ experiments:
         conditions:
           - {feature: offset_sigma, op: "<", value: 4, p_true: 0.95, p_false: 0.01}
           - {feature: gain_ratio, op: abs_dev1_lt, value: 0.05, p_true: 0.95, p_false: 0.01}
+          - {feature: outlier_sigma, op: "<", value: 6, p_true: 0.95, p_false: 0.01}
         fix: Nothing to fix. Record the ratio of measured to predicted EMF.
+      single_reading_glitch:
+        name: One reading far off the rest (a loose contact or an amplifier spike)
+        prior: 0.08
+        typical_size: "One point many times the scatter away from the line; the rest agree with the prediction"
+        conditions:
+          - {feature: outlier_sigma, op: ">", value: 6, p_true: 0.95, p_false: 0.01}
+        fix: Re-seat the coil leads and the amplifier input and repeat the run. If the spike comes back at the same moment, look for something switching on then (a relay, a motor, a lamp) and screen or move it.
       amplifier_offset:
         name: Amplifier input offset voltage
         prior: 0.18
@@ -416,6 +424,7 @@ experiments:
           amplifier_offset: offset_stays
           ground_offset: offset_gone
           no_fault: no_offset
+          single_reading_glitch: no_offset
           turns_mismatch: no_offset
           flux_sensor_error: no_offset
           polarity_reversed: no_offset
@@ -429,6 +438,7 @@ experiments:
           amplifier_offset: inductance_ok
           ground_offset: inductance_ok
           no_fault: inductance_ok
+          single_reading_glitch: inductance_ok
           polarity_reversed: inductance_ok
       swap_coil_leads:
         name: Swap the coil leads and repeat
@@ -441,6 +451,7 @@ experiments:
           amplifier_offset: no_change
           ground_offset: no_change
           no_fault: no_change
+          single_reading_glitch: no_change
 
   beer_lambert:
     # The fitted absorption coefficient scatters by about 1.4% (11 thicknesses at 0.4%

@@ -295,6 +295,7 @@ labels:
   measured_over_predicted: ["Measured ÷ predicted EMF", "", 1]
   dc_offset_V: ["DC offset", "V"]
   peak_predicted_emf_V: ["Peak predicted EMF", "V"]
+  odd_reading_time_s: ["Time of the odd reading", "s"]
   offset_coil_connected_V: ["Offset, coil connected", "V"]
   offset_input_shorted_V: ["Offset, input shorted", "V"]
   absorption_coefficient_per_cm: ["Absorption coefficient α", "/cm", 1]

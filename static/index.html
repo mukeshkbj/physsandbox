@@ -481,6 +481,21 @@ function renderSamples() {
   renderSampleInfo();
 }
 
+/* The same reading of a table as the sandbox's (sandbox/tools/analyze.py load_csv):
+   UTF-8 or UTF-16, comma, semicolon, tab or space separated, quoted names,
+   trailing empty cells and rows of only separators allowed. */
+async function readText(blob) {
+  const buf = await blob.arrayBuffer(), b = new Uint8Array(buf.slice(0, 2));
+  if (b[0] === 0xFF && b[1] === 0xFE) return new TextDecoder("utf-16le").decode(buf);
+  if (b[0] === 0xFE && b[1] === 0xFF) return new TextDecoder("utf-16be").decode(buf);
+  return new TextDecoder("utf-8").decode(buf).replace(/^\ufeff/, "");
+}
+function delimOf(line) { return [",", ";", "\t"].find(d => line.includes(d)) || null; }
+function splitHeader(line, delim) {
+  const cells = (delim ? line.split(delim) : line.trim().split(/\s+/)).map(c => c.trim().replace(/^["']|["']$/g, "").trim());
+  while (cells.length && cells[cells.length - 1] === "") cells.pop();
+  return cells;
+}
 /* Column mapping: a file whose columns have other names (Voltage (V), I_mA, ...) is
    renamed in the browser to the names this experiment uses. Only the header changes;
    the numbers are sent exactly as recorded. */
@@ -505,10 +520,11 @@ $("sample-info").addEventListener("click", async e => {
   const pick = {}; document.querySelectorAll("#sample-info [data-map]").forEach(sel => { pick[sel.value] = sel.dataset.map; });
   if (Object.keys(pick).length !== document.querySelectorAll("#sample-info [data-map]").length)
     return toast("Pick a different column for each one.");
-  const lines = (await S.file.text()).split(/\r?\n/);
-  const i = lines.findIndex(l => l.trim() && !l.startsWith("#"));
+  const lines = (await readText(S.file)).split(/\r?\n/);
+  const i = lines.findIndex(l => !l.trim().startsWith("#") && l.replace(/[,;\t\s"']/g, ""));
   if (i < 0) return;
-  lines[i] = lines[i].split(",").map(h => pick[h.trim()] || h.trim()).join(",");
+  const d = delimOf(lines[i]);
+  lines[i] = splitHeader(lines[i], d).map(h => pick[h] || h).join(d || " ");
   S.file = new Blob([lines.join("\n")], { type: "text/csv" });
   toast("Columns renamed in your browser. The numbers are unchanged.");
   renderSampleInfo();
@@ -524,12 +540,13 @@ async function renderSampleInfo() {
     return;
   }
   let text = "";
-  try { text = await S.file.text(); } catch { }
+  try { text = await readText(S.file); } catch { }
   if (seq !== infoSeq) return;
   const lines = text.split(/\r?\n/).filter(l => l.trim());
-  const comments = lines.filter(l => l.startsWith("#")).length;
-  const data = lines.filter(l => !l.startsWith("#"));
-  const header = (data[0] || "").split(",").map(h => h.trim());
+  const comments = lines.filter(l => l.trim().startsWith("#")).length;
+  // Rows of only separators are a spreadsheet's empty rows, not data.
+  const data = lines.filter(l => !l.trim().startsWith("#") && l.replace(/[,;\t\s"']/g, ""));
+  const header = splitHeader(data[0] || "", delimOf(data[0] || ""));
   const missing = need.filter(c => !header.includes(c));
   const fits = !missing.length || (S.pendingTest && header.length >= 2);
   const preview = lines.slice(0, Math.min(lines.length, comments + 4)).map(l =>

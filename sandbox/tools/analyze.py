@@ -42,29 +42,79 @@ COLUMNS = {
 }
 
 
+def decode(raw):
+    """Text of an uploaded file: UTF-8 (with or without a byte-order mark) or
+    UTF-16, which is what Excel's "Unicode text" export writes."""
+    if raw.startswith((b"\xff\xfe", b"\xfe\xff")):
+        return raw.decode("utf-16", errors="replace")
+    if raw[:400].count(b"\x00") > 40:          # UTF-16 without a byte-order mark
+        return raw.decode("utf-16-le", errors="replace")
+    return raw.decode("utf-8", errors="replace").lstrip("﻿")
+
+
+def delimiter(header_line):
+    """The column separator, read off the header line: comma, semicolon (European
+    spreadsheets, which then use a decimal comma), tab, or runs of spaces."""
+    for d in (",", ";", "\t"):
+        if d in header_line:
+            return d
+    return None                                  # whitespace-separated
+
+
+def is_comment(line):
+    return line.lstrip().startswith("#")
+
+
+def cells(line, delim):
+    """A line as cells. Spreadsheet exports quote names, pad rows with empty
+    cells and leave rows of only separators; none of that is data."""
+    parts = line.split(delim) if delim else line.split()
+    out = [c.strip().strip('"').strip("'").strip() for c in parts]
+    while out and out[-1] == "":
+        out.pop()
+    return out
+
+
+def number_text(c, delim):
+    """A decimal comma ("1,25") is a decimal point when commas don't separate the
+    columns: semicolon-separated files, and one-column or space-separated ones."""
+    if delim == ";" or (delim is None and c.count(",") == 1 and "." not in c):
+        return c.replace(",", ".")
+    return c
+
+
 def load_csv(path):
-    """Load a numeric CSV. Lines starting with '#' are comments and are skipped."""
-    rows, header, dropped = [], None, 0
-    with open(path, encoding="utf-8", errors="replace") as f:
-        for n, line in enumerate(f, 1):
-            line = line.strip()
-            if not line:
+    """Load a numeric table. Lines starting with '#' are comments; blank lines and
+    lines of only separators are skipped. The first other line is the header."""
+    with open(path, "rb") as f:
+        text = decode(f.read())
+    rows, header, dropped, delim = [], None, 0, ","
+    for n, line in enumerate(text.splitlines(), 1):
+        if is_comment(line):
+            dropped += 1
+            continue
+        if header is None:
+            if not line.strip():
                 continue
-            if line.startswith("#"):
-                dropped += 1
-                continue
-            if header is None:
-                header = [h.strip() for h in line.split(",")]
-                continue
+            delim = delimiter(line)
+            header = cells(line, delim)
+            if not header:
+                header = None
+            continue
+        row_cells = cells(line, delim)
+        if not row_cells:
+            continue
+        if len(row_cells) != len(header):
+            raise DataError(f"Line {n} has {len(row_cells)} values but the header has {len(header)} columns.")
+        row = []
+        for name, c in zip(header, row_cells):
             try:
-                row = [float(x) for x in line.split(",")]
+                row.append(float(number_text(c, delim)))
             except ValueError:
-                raise DataError(f"Line {n} has a value that isn't a number.")
-            if len(row) != len(header):
-                raise DataError(f"Line {n} has {len(row)} values but the header has {len(header)} columns.")
-            if not all(np.isfinite(row)):
-                raise DataError(f"Line {n} contains NaN or infinity.")
-            rows.append(row)
+                raise DataError(f"Line {n}, column {name}: \"{c[:24]}\" isn't a number.") from None
+        if not all(np.isfinite(row)):
+            raise DataError(f"Line {n} contains NaN or infinity.")
+        rows.append(row)
     if header is None or len(rows) < 3:
         raise DataError("The file needs a header row and at least 3 rows of numbers.")
     return header, np.array(rows), dropped
@@ -208,8 +258,14 @@ def main():
     check_columns(experiment, header)
     try:
         out = ANALYSES[experiment](header, data, expected)
+    except DataError:
+        raise
     except RuntimeError as e:  # curve_fit failed to converge
         raise DataError(f"The model fit didn't converge on this data ({e}). Check the columns and units.")
+    except (ValueError, IndexError, ZeroDivisionError, np.linalg.LinAlgError, TypeError) as e:
+        raise DataError(f"This data can't be fitted with the {experiment} model ({type(e).__name__}: {e}). "
+                        "Check that the columns hold the right quantities, in the stated units, "
+                        "with enough distinct readings.") from None
     out["input"] = {"rows": int(data.shape[0]), "columns": header, "comment_lines_ignored": dropped}
     print(json.dumps(out, default=float))
 

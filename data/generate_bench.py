@@ -394,4 +394,16 @@ write("balmer_partner.csv", ["n_upper", "wavelength_nm"], q_n,
 write("balmer_partner_fresh_tube.csv", ["n_upper", "wavelength_nm"], q_n,
       balmer(q_true_n) + rng.normal(0, 0.05, q_n.size), fmt="{:.6g}")
 
+# --- Faraday: a steady flux ramp with one bad reading, as a spreadsheet saves it ----
+# Regression case for a file a user uploaded: comment lines and an empty row of only
+# commas above the header, and a constant dPhi/dt (so the predicted EMF is flat).
+# Deterministic: no random draws, so every dataset above is unchanged.
+_lines = ["# Faraday's Law - steady flux ramp,,", "# Coil turns: 200,,",
+          "# Expected behaviour: induced voltage = -N * d(flux)/dt,,",
+          "# One reading at t = 0.5 s looks wrong,,", ",,", "time_s,magnetic_flux_Wb,induced_voltage_V"]
+for _i in range(12):
+    _t = round(0.1 * _i, 1)
+    _lines.append(f"{_t:g},{0.001 * _t:.4g},{-0.65 if _i == 5 else -0.2}")
+(OUT / "faraday_ramp_glitch.csv").write_text("\r\n".join(_lines) + "\r\n")
+
 print(f"Wrote bench datasets to {OUT}")

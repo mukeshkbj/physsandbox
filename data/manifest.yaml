@@ -141,6 +141,10 @@ datasets:
   - file: faraday_half_turns.csv
     experiment: faraday
     truth: turns_mismatch
+  - file: faraday_ramp_glitch.csv
+    experiment: faraday
+    expected: {turns: 200}
+    truth: single_reading_glitch
   - file: faraday_clean.csv
     experiment: faraday
     truth: no_fault
